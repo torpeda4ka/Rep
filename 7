@@ -1,0 +1,30 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+static double a;
+  static  double b;
+    static  double c;
+
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+        a =Double.parseDouble(r.readLine());
+        b =Double.parseDouble(r.readLine());
+        c =Double.parseDouble(r.readLine());
+
+        double d = ((b*b) - (4*a*c));
+        if (d>=0) {
+            double x1 = ((-b + Math.sqrt(d)) / (2 * a));
+            double x2 = ((-b - Math.sqrt(d)) / (2 * a));
+            System.out.println(x1);
+            System.out.println(x2);
+        }
+        else {
+            System.out.println("No roots");
+
+        }
+
+    }
+}
