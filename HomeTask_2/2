@@ -1,0 +1,21 @@
+
+import java.io.IOException;
+
+public class Main {
+static int n = 1;
+  static  int m = 1;
+    static  int c;
+
+
+    public static void main(String[] args) throws IOException {
+
+        for (int i=0; i<11;) {
+          m = n + c;
+           n=c;
+            c=m;
+            i++;
+            System.out.println(m);
+        }
+
+    }
+}
