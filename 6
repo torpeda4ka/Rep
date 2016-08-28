@@ -1,0 +1,21 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+static double a;
+  static  double b;
+    static  double c;
+
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+        a =Double.parseDouble(r.readLine());
+        b =Double.parseDouble(r.readLine());
+
+            c = Math.sqrt((a*a) + (b*b));
+        System.out.println("P : "+ (a+b+c));
+        System.out.println("S : " + ((a*b) / 2));
+
+    }
+}
