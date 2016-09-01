@@ -10,7 +10,7 @@ public class Main {
                 for (int y=0; y<=59; y++){
                     if(m(x,y)){
                         i++;
-                        System.out.println(x+" : "+y);
+                       
                     }
                 }
             }
