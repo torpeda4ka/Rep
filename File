@@ -1,0 +1,55 @@
+import java.io.*;
+import java.util.ArrayList;
+
+public class Main {
+
+    static   ArrayList<Character> list = new ArrayList<>();
+    static String filename = "D:/D/input.txt";
+
+    public static void main(String[] args) throws Exception {
+        read(filename);
+        sort(list);
+
+    }
+
+    public static void read(String filename) throws Exception {
+        File file = new File(filename);
+        BufferedReader in = new BufferedReader(new FileReader(filename));
+        int c;
+        while ((c = in.read()) != -1) {
+            if (checkString(c) == true) {
+                list.add((char)c);
+            }
+        }
+    }
+
+    public static boolean checkString(int c ) {
+        try {
+            Integer.parseInt(String.valueOf((char)(c)));
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static void sort(ArrayList<Character> list) throws IOException {
+        String line;
+        BufferedReader in = new BufferedReader(new FileReader(filename));
+   line = in.readLine();
+        line = in.readLine();
+        int n = Integer.parseInt(line);
+        ArrayList<Integer> arr = new ArrayList<>();
+        for (int i=0; i<list.size(); i++) {
+            arr.add(Character.getNumericValue(list.get(i)));
+        }
+      int sum=1;
+        for (int i=0; i<arr.size(); i++) {
+            if (arr.get(i) > n) {
+                sum = sum * arr.get(i);
+            }
+        }
+        FileWriter f = new FileWriter("D:/D/output.txt");
+        f.write(Integer.toString(sum));
+        f.close();
+    }
+}
