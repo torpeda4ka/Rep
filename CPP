@@ -1,0 +1,65 @@
+package com.company;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+public class Main {
+
+
+    public static void main(String[] args) throws IOException {
+        System.out.println(File.read(File.filename));
+
+    }
+
+
+}
+class File {
+
+  static  StringBuilder sb = new StringBuilder();
+
+     public static String filename="D:/D/file.txt";
+
+   public File(String filename) {
+       this.filename=filename;
+    }
+
+    static File file = new File(filename);
+
+   static List<StringBuilder> arr = new ArrayList<>();
+
+
+    public static String read(String filename) throws FileNotFoundException {
+
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+
+            try {
+                String s;
+                while ((s = in.readLine()) != null) {
+                    sb.append(s);
+                    sb.append("\n");
+                    arr.add(sb);
+                }
+            } finally {
+                in.close();
+            }
+
+        } catch (IOException e) {
+            System.out.println("Файла не существует!");
+          //  throw new RuntimeException(e);
+
+        }
+        return sb.toString();
+    }
+
+
+    public String getAbsoluteFile() {
+        return filename;
+    }
+}
