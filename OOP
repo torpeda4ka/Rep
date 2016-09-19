@@ -1,0 +1,60 @@
+package com.company;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Main {
+
+    static long currentTime;
+    static long array_modify;
+    static long array_end;
+    static long array_begin;
+    static long array_random;
+    static int n=1;
+
+    public static void main(String[] args) {
+      Array();
+
+    }
+    public static void Array() {
+
+        Random r = new Random();
+        ArrayList<Integer> end = new ArrayList<>();
+        ArrayList<Integer> begin = new ArrayList<>();
+        ArrayList<Integer> random = new ArrayList<>();
+
+
+        currentTime = System.currentTimeMillis();
+        for (int i = 0; i < 100000; i++) {
+            end.add(i);
+        }
+        array_end = System.currentTimeMillis() - currentTime;
+        System.out.println(array_end);
+
+
+        currentTime = System.currentTimeMillis();
+        for (int i = 0; i < 100000; i++) {
+            begin.add(0, i);
+        }
+        array_begin = System.currentTimeMillis() - currentTime;
+        System.out.println(array_begin);
+
+
+        currentTime = System.currentTimeMillis();
+        for (int i = 0; i < 100000; i++) {
+            end.set(r.nextInt(100000), i);
+        }
+        array_modify = System.currentTimeMillis() - currentTime;
+        System.out.println(array_modify);
+
+
+        currentTime = System.currentTimeMillis();
+        for (int i = 0; i < 100000; i++) {
+            random.add(r.nextInt(n), i);
+            n++;
+        }
+        array_random = System.currentTimeMillis() - currentTime;
+        System.out.println(array_random);
+
+    }
+}
