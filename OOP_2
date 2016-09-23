@@ -1,0 +1,107 @@
+package com.company;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
+
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        Map<String, Integer> h = new HashMap<>();
+        TreeMap<String, Integer> map = new TreeMap<>();
+        BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Введите строку");
+        String s = r.readLine();
+        String a[] = s.split(" ");
+        boolean b[] = new boolean[a.length];
+        int count[] = new int[a.length];
+        System.out.println("1. Без коллекций");
+        System.out.println("2. TreeMap");
+        System.out.println("3. HashMap");
+        int n = Integer.parseInt(r.readLine());
+        if (n==1) {
+            NoColection.NoCollection(s,count,b,a);
+            NoColection.print(a,b,count);
+        }
+
+        if (n==2) {
+            TreeeMap.TM(s,count,b,a, map);
+            TreeeMap.Treeprint(map);
+        }
+
+        if (n==3) {
+            HashhMap.HM(s,count,b,a,h);
+            HashhMap.Hashprint(h);
+        }
+    }
+        }
+
+class NoColection  {
+
+    public static void NoCollection(String s, int[] count, boolean b[], String a[]){
+
+        for (int j = 0; j < a.length; j++) {
+            count[j]++;
+            for (int k = j + 1; k < a.length; k++) {
+                if (a[j].equalsIgnoreCase(a[k])) {
+                    count[j]++;
+                    b[k] = true;
+                }
+            }
+        }
+    }
+
+    public static void print(String[] a, boolean b[], int count[] ) {
+        for (int i=0; i<a.length; i++) {
+            if (b[i]==false) {
+                System.out.println(a[i] + " " + count[i]);
+            }
+        }
+    }
+}
+
+class TreeeMap extends NoColection {
+
+    public static void TM(String s, int[] count, boolean b[], String a[], TreeMap<String, Integer> map) {
+
+        NoCollection(s,count,b,a);
+
+        for (int i=0; i<a.length; i++ ) {
+            if (b[i]==false) {
+                map.put(a[i], count[i]);
+            }
+
+        }
+    }
+
+    public static void Treeprint(TreeMap<String,Integer> map){
+        for (Map.Entry e : map.entrySet()){
+            System.out.println(e.getKey()+" "+ e.getValue());
+        }
+    }
+}
+
+class HashhMap extends NoColection {
+
+    public static void HM(String s, int[] count, boolean b[], String a[], Map<String, Integer> h) {
+
+        NoCollection(s,count,b,a);
+
+        for (int i=0; i<a.length; i++ ) {
+            if (b[i]==false) {
+                h.put(a[i], count[i]);
+            }
+        }
+    }
+    
+    public static void Hashprint(Map<String, Integer> h) {
+        for (Map.Entry entry : h.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+    }
+}
