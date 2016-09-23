@@ -48,6 +48,7 @@ public class Main {
                 sum = sum * arr.get(i);
             }
         }
+        
         FileWriter f = new FileWriter("D:/D/output.txt");
         f.write(Integer.toString(sum));
         f.close();
