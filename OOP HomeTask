@@ -58,7 +58,6 @@ class File {
         return sb.toString();
     }
 
-
     public String getAbsoluteFile() {
         return filename;
     }
