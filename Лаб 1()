@@ -1,0 +1,65 @@
+import java.util.ArrayList; 
+import java.util.Scanner; 
+
+
+public class Trie { 
+TrieNode Root=new TrieNode(); 
+static class TrieNode{ 
+char sym; 
+ArrayList<TrieNode> children=new ArrayList<TrieNode>(); 
+boolean eow;//checks whether it is an end of the word or not 
+public TrieNode get(char c,TrieNode nd){ 
+for(TrieNode temp:nd.children){ 
+if(temp.sym==c) 
+return temp; 
+} 
+
+return null; 
+} 
+} 
+public static void insert(String s,TrieNode root){ 
+char[] text=s.toCharArray(); 
+insert(text,root,0); 
+} 
+
+public static void insert(char[] s,TrieNode nd,int index){ 
+if(s.length!=index){ 
+if(nd.children.isEmpty()||nd.get(s[index],nd)==null){ 
+TrieNode temp=new TrieNode(); 
+temp.sym=s[index]; 
+if(index==s.length-1) 
+temp.eow=true; 
+else 
+temp.eow=false; 
+nd.children.add(temp); 
+insert(s,temp,index+1); 
+} 
+else{ 
+insert(s,nd.get(s[index], nd),index+1); 
+} 
+} 
+} 
+public static void print(TrieNode node, String s) { 
+for (int i = 0; i < node.children.size(); i++) { 
+TrieNode child = node.children.get(i); 
+if (child != null) 
+print(child, s + node.children.get(i).sym); 
+} 
+if (node.eow) { 
+System.out.println(s); 
+} 
+} 
+public static void main(String[] argsz){ 
+Scanner sc=new Scanner(System.in); 
+String s=""; 
+TrieNode root = new TrieNode(); 
+while(!s.equals(" ")){ 
+s=sc.nextLine(); 
+insert(s,root); 
+} 
+print(root,""); 
+sc.close(); 
+
+} 
+
+}
