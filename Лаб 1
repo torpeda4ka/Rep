@@ -1,0 +1,80 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+
+public class Trie {
+
+    ArrayList<Trie> children = new ArrayList<>();
+    char sb;
+    static int i=0;
+    boolean end;
+    char c;
+    static char[] ch = new char[0];
+    static Trie node;
+    static String s="";
+
+    public Trie check (char c, Trie node) {
+        for (Trie t : node.children) {
+            if (t.sb==c) {
+                return t;
+            }
+        }
+        return null;
+    }
+
+    public static void insert (char[] ch, Trie node, int i) throws Exception {
+    if(ch.length!=i) {
+        if ((node.children.isEmpty()) || (node.check(ch[i], node)) == null) {
+            Trie t = new Trie();
+            t.sb = ch[i];
+            if (i == ch.length - 1) {
+                t.end = true;
+            } else {
+                t.end = false;
+                System.out.println(t);
+                node.children.add(t);
+                insert(ch, t, i + 1);
+            }
+        } else {
+            insert(ch, node.check(ch[i], node), i + 1);
+        }
+    }
+    }
+    public static void print (Trie node, String s) {
+        for (int i = 0; i < node.children.size(); i++) {
+            Trie child = node.children.get(i);
+            if (child != null) {
+                print(child, s + node.children.get(i).sb);
+            }
+        }
+        if(node.end){
+            System.out.println(s);
+        }
+    }
+
+
+
+    public static char[] fileRead(char[] ch,String s) throws Exception {
+        String filename = "D:/D/file.txt";
+        File file = new File(filename);
+
+        BufferedReader in = new BufferedReader(new FileReader(filename));
+
+        int c;
+
+            s = in.readLine();
+           System.out.println(s);
+             ch  = s.toCharArray();
+           System.out.println(ch[0]);
+
+
+        return ch;
+    }
+
+    public static void main (String[] args) throws Exception {
+        fileRead(ch,s);
+        insert(ch,node,i);
+        print(node,s);
+    }
+}
