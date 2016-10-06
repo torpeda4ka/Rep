@@ -1,0 +1,63 @@
+package com.company;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import static com.company.Main.n;
+import static com.company.WaitingThread.i;
+
+
+public class Main  {
+static int n;
+    public static void main(String[] args) throws IOException, InterruptedException {
+        Object sync = new Object();
+        Thread t = new Thread(new WaitingThread(sync));
+        t.start();
+        BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+        while (true) {
+            System.out.println("In");
+            n = Integer.parseInt(r.readLine());
+        /*    if (n == 1) {
+                synchronized (children) {
+                    children.wait();
+                }
+            }*/
+            if (n == 2) {
+                System.out.println(i);
+            }
+        }
+        
+    }
+}
+
+class WaitingThread implements Runnable{
+
+static long i = 0;
+    private Object sync;
+
+    public WaitingThread(Object sync) {
+        this.sync = sync;
+    }
+
+    @Override
+    public void run(){
+        while(true) {
+            if (n == 1) {
+                synchronized (sync) {
+                    try {
+                        sync.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            i++;
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
