@@ -25,7 +25,7 @@ public class Main  {
             m = Integer.parseInt(r.readLine());
        //     System.out.println("Main method is running");
             if (m == 1) {
-                //wait = 1;
+                wait = false;
             }
             if (m == 2) {
                 wait = true;
@@ -53,32 +53,30 @@ class WaitingThread extends Main  implements Runnable {
     public void run() {
 
         while (true) {
+
             if (wait) {
                 System.out.println("IN IF");
                 synchronized (sync) {
-
-                    //  System.out.println("Thread is waiting");
                     try {
-                        sync.wait(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        sync.wait();
+                    } catch (InterruptedException h) {
+                        h.printStackTrace();
                     }
 
                 }
 
             }
 
-
-           /* if (wait==1) {
+            if (!wait) {
                 synchronized (sync) {
                     try {
                         sync.notify();
-                        System.out.println("Thread is continued");
+                      //  System.out.println("Thread is continued");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-            }*/
+            }
 
             pi = pi + (4 * ((Math.pow(-1, n)) / ((2 * n) + 1)));
             n++;
