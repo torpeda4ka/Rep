@@ -4,60 +4,88 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import static com.company.Main.n;
-import static com.company.WaitingThread.i;
+import static com.company.WaitingThread.wait;
 
 
 public class Main  {
-static int n;
-    public static void main(String[] args) throws IOException, InterruptedException {
+    static int m;
+ //  static boolean wait;
+    static  double pi;
+
+    public static void main(String[] args) throws InterruptedException, IOException {
         Object sync = new Object();
-        Thread t = new Thread(new WaitingThread(sync));
+        Thread t = new Thread(new WaitingThread(sync,wait));
         t.start();
         BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("1. Продолжить вычисления.");
+        System.out.println("2. Приостановить вычисления");
+        System.out.println("3. Посмотреть текущий результат.");
+
         while (true) {
-            System.out.println("In");
-            n = Integer.parseInt(r.readLine());
-        /*    if (n == 1) {
-                synchronized (children) {
-                    children.wait();
-                }
-            }*/
-            if (n == 2) {
-                System.out.println(i);
+            m = Integer.parseInt(r.readLine());
+       //     System.out.println("Main method is running");
+            if (m == 1) {
+                //wait = 1;
+            }
+            if (m == 2) {
+                wait = true;
+                System.out.println("Stop");
+            }
+            if (m == 3) {
+                System.out.println(pi);
+                System.out.println(wait);
             }
         }
-        
     }
 }
 
-class WaitingThread implements Runnable{
+class WaitingThread extends Main  implements Runnable {
+    private final Object sync;
+    static boolean wait;
+    int n = 0;
 
-static long i = 0;
-    private Object sync;
-
-    public WaitingThread(Object sync) {
+    public WaitingThread(Object sync, boolean wait) {
         this.sync = sync;
+        this.wait = wait;
     }
 
     @Override
-    public void run(){
-        while(true) {
-            if (n == 1) {
+    public void run() {
+
+        while (true) {
+            if (wait) {
+                System.out.println("IN IF");
                 synchronized (sync) {
+
+                    //  System.out.println("Thread is waiting");
                     try {
-                        sync.wait();
+                        sync.wait(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                 }
+
             }
-            i++;
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
+
+           /* if (wait==1) {
+                synchronized (sync) {
+                    try {
+                        sync.notify();
+                        System.out.println("Thread is continued");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }*/
+
+            pi = pi + (4 * ((Math.pow(-1, n)) / ((2 * n) + 1)));
+            n++;
+
+
         }
+
     }
 }
+
