@@ -1,89 +1,104 @@
 package com.company;
 
+import static com.company.WaitingThread.isWaiting;
+import static com.company.WaitingThread.wait;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-import static com.company.WaitingThread.wait;
-
-
-public class Main  {
+public class Main {
     static int m;
- //  static boolean wait;
-    static  double pi;
-
+    static long time;
+    long finish;
+    long start;
+    static double pi;
     public static void main(String[] args) throws InterruptedException, IOException {
         Object sync = new Object();
-        Thread t = new Thread(new WaitingThread(sync,wait));
+        Thread t = new Thread(new WaitingThread(sync));
         t.start();
         BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("1. Продолжить вычисления.");
         System.out.println("2. Приостановить вычисления");
         System.out.println("3. Посмотреть текущий результат.");
-
+        System.out.println("4. Узнать суммарное время, затраченное на вычисления.");
+        System.out.println("5. Выход.");
         while (true) {
             m = Integer.parseInt(r.readLine());
-       //     System.out.println("Main method is running");
             if (m == 1) {
                 wait = false;
+                if (!wait && isWaiting) {
+                    System.out.println("IN IF");
+                    synchronized (sync) {
+                        try {
+                            sync.notifyAll();
+                            isWaiting = false;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
             if (m == 2) {
                 wait = true;
-                System.out.println("Stop");
             }
             if (m == 3) {
                 System.out.println(pi);
-                System.out.println(wait);
+            }
+            if (m == 4){
+                System.out.println(time*0.000000001);
+
+            }
+            if (m==5) {
+                t.join();
             }
         }
     }
 }
-
-class WaitingThread extends Main  implements Runnable {
+class WaitingThread extends Main implements Runnable {
     private final Object sync;
     static boolean wait;
+    static boolean isWaiting;
+
     int n = 0;
-
-    public WaitingThread(Object sync, boolean wait) {
+    public WaitingThread(Object sync) {
         this.sync = sync;
-        this.wait = wait;
     }
-
     @Override
     public void run() {
+        start = System.nanoTime();
 
         while (true) {
-
-            if (wait) {
+            if (wait && !isWaiting) {
                 System.out.println("IN IF");
                 synchronized (sync) {
                     try {
+                        isWaiting = true;
                         sync.wait();
                     } catch (InterruptedException h) {
                         h.printStackTrace();
                     }
-
                 }
-
             }
-
-            if (!wait) {
+       /*     if (!wait && isWaiting) {
                 synchronized (sync) {
                     try {
                         sync.notify();
-                      //  System.out.println("Thread is continued");
+                        isWaiting = false;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
+            }*/
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-
             pi = pi + (4 * ((Math.pow(-1, n)) / ((2 * n) + 1)));
             n++;
-
-
+            finish = System.nanoTime();
+            time = finish - start;
         }
 
     }
 }
-
