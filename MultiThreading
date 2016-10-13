@@ -45,7 +45,7 @@ public class Main {
                 System.out.println(pi);
             }
             if (m == 4){
-                System.out.println(time*0.000000001);
+                System.out.println(time * 0.000000001);
 
             }
             if (m==5) {
@@ -79,16 +79,25 @@ class WaitingThread extends Main implements Runnable {
                     }
                 }
             }
-    
-            try {
+       /*     if (!wait && isWaiting) {
+                synchronized (sync) {
+                    try {
+                        sync.notify();
+                        isWaiting = false;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }*/
+          /*  try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
             pi = pi + (4 * ((Math.pow(-1, n)) / ((2 * n) + 1)));
             n++;
             finish = System.nanoTime();
-            time = finish - start;
+            time = (finish - start);
         }
 
     }
