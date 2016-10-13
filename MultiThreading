@@ -79,16 +79,7 @@ class WaitingThread extends Main implements Runnable {
                     }
                 }
             }
-       /*     if (!wait && isWaiting) {
-                synchronized (sync) {
-                    try {
-                        sync.notify();
-                        isWaiting = false;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }*/
+    
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
