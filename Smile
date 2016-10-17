@@ -1,0 +1,58 @@
+
+
+import java.applet.*;
+import java.awt.*;
+
+ /* <applet code = "face" width = 300 height = 300> </applet> */
+
+public class face extends Applet {
+
+    int i = 167;
+    int a = 64;
+    int b = 50;
+    int x = 78;
+
+
+    public void paint(Graphics g) {
+
+        g.setColor(Color.yellow);
+        g.fillOval(100, 100, 100, 100);
+        g.setColor(Color.black);
+        g.fillOval(123, 125, 15, 15);
+        g.fillOval(163, 125, 15, 15);
+        // g.drawLine(150,165,150,150);
+        g.drawArc(x, i, 140, 100, a, b);
+        a();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+            x=30;
+
+        if (i>75) {
+            i--;
+        }
+        if (a>-230) {
+            a--;
+        }
+        if (b>-180) {
+            b--;
+        }
+       // g.drawArc(78, i, 140, 100, a, b);
+
+      //  g.drawArc(78,75,140,100,-63,-50);
+        }
+
+        public void a(){
+            if (i!=75 && a!=-230 && b!=-180){
+                repaint();
+            }
+        }
+
+
+    }
+
+  // repaint(50,110,150,70,25);
+
