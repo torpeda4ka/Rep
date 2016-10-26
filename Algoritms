@@ -1,0 +1,201 @@
+//package com.company;
+
+import java.io.*;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        boolean sort = false;
+        int n = 0;
+        Random rn = new Random();
+        BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+        Scanner sc = new Scanner(new File("D:/D/lab.txt"));
+
+        System.out.println("Введите количество генерируемых значений");
+        n = Integer.parseInt(r.readLine());
+        int[] mas = new int[n];
+        Generation(n, rn);
+        while (true) {
+            System.out.println("1. Быстрая сортировка");
+            System.out.println("2. Сортировка выбором");
+            System.out.println("3. Сортировка вставками");
+            System.out.println("4. Сортировка пузырьком");
+            System.out.println("5. Проверить, отсортирован ли массив");
+            int m = Integer.parseInt(r.readLine());
+            if (m == 1) {
+                sc = new Scanner(new File("D:/D/lab.txt"));
+                System.out.println("Введите количество сортируемых елементов");
+                int count = Integer.parseInt(r.readLine());
+                mas = new int[n];
+                int i = 0;
+                while (sc.hasNext()) {
+                    mas[i] = sc.nextInt();
+                    i++;
+                }
+                Quick(mas, 0, count - 1, rn);
+                sort = true;
+                for (int c = 0; c < mas.length; c++) {
+                    System.out.println(mas[c]);
+                }
+            }
+            if (m == 2) {
+                sc = new Scanner(new File("D:/D/lab.txt"));
+                System.out.println("Введите количество сортируемых елементов");
+                int count = Integer.parseInt(r.readLine());
+                int[] mas2 = new int[n];
+                int i = 0;
+                while (sc.hasNext()) {
+                    mas2[i] = sc.nextInt();
+                    i++;
+                }
+                Selection(count, mas2);
+                sort = true;
+            }
+            if (m == 3) {
+                sc = new Scanner(new File("D:/D/lab.txt"));
+                System.out.println("Введите количество сортируемых елементов");
+                int count = Integer.parseInt(r.readLine());
+                mas = new int[n];
+                int i = 0;
+                while (sc.hasNext()) {
+                    mas[i] = sc.nextInt();
+                    i++;
+                }
+                Insert(mas,count);
+                sort = true;
+                for (int c = 0; c < mas.length; c++) {
+                    System.out.println(mas[c]);
+                }
+            }
+            if (m == 4) {
+                sc = new Scanner(new File("D:/D/lab.txt"));
+                System.out.println("Введите количество сортируемых елементов");
+                int count = Integer.parseInt(r.readLine());
+                mas = new int[n];
+                int i = 0;
+                while (sc.hasNext()) {
+                    mas[i] = sc.nextInt();
+                    i++;
+                }
+                Bubble(count, mas);
+                sort = true;
+            }
+            if (m == 5) {
+                if (sort == false) {
+                    System.out.println("Массив не отсортирован");
+                }
+                if (sort == true) {
+                    System.out.println("Массив отсортирован");
+                }
+            }
+        }
+    }
+
+
+    public static void Insert(int mas[], int count) {
+        long start = System.nanoTime();
+        for(int i = 1; i < count; i++){
+            int curr = mas[i];
+            int prev = i - 1;
+            while(prev >= 0 && mas[prev] > curr){
+                mas[prev+1] = mas[prev];
+                prev--;
+            }
+            mas[prev+1] = curr;
+        }
+        long finish = System.nanoTime();
+        long time = finish - start;
+        System.out.println("Время на сортировку : " + time * 0.000000001);
+    }
+
+
+    public static void Quick(int[] mas,int l, int r,Random rn){
+        long start = System.nanoTime();
+        int i=l;
+        int j=r;
+        int x = mas[l + rn.nextInt(r - l + 1) ];
+        while (i<=j){
+            while (mas[i]<x) {
+                i++;
+            }
+            while (mas[j]>x){
+                j--;
+            }
+            if (i<=j){
+                int temp = mas[i];
+                mas[i] = mas[j];
+                mas[j] = temp;
+                i++;
+                j--;
+            }
+        }
+        if (l<j){
+            Quick(mas,l,j,rn);
+        }
+        if (i<r){
+            Quick(mas,i,r,rn);
+        }
+        long finish = System.nanoTime();
+        long time = finish - start;
+        System.out.println("Время на сортировку : " + time * 0.000000001);
+    }
+
+    public static void Selection(int count, int[] mas2) {
+        long start = System.nanoTime();
+        for (int i=0; i<count; i++){
+            int min = mas2[i];
+            int  min_i = i;
+            for (int j = i+1; j<count; j++){
+                if (mas2[j]<min){
+                    min = mas2[j];
+                    min_i=j;
+                }
+            }
+            if (i!=mas2[i]){
+                int tmp = mas2[i];
+                mas2[i] = mas2[min_i];
+                mas2[min_i] = tmp;
+            }
+
+        }
+        long finish = System.nanoTime();
+        long time = finish - start;
+        System.out.println("Время на сортировку : " + time * 0.000000001);
+        for (int i = 0; i < mas2.length; i++){
+            System.out.println(mas2[i]);
+        }
+    }
+
+
+    public static void Bubble(int count,int[] mas){
+        long start = System.nanoTime();
+        for (int j=count-1; j>0; j--){
+            for (int i=0; i<j; i++){
+                if (mas[i]> mas[i+1]) {
+                    int tmp = mas[i];
+                    mas[i] = mas[i + 1];
+                    mas[i + 1] = tmp;
+                }
+            }
+        }
+        long finish = System.nanoTime();
+        long time = finish - start;
+        System.out.println("Время на сортировку : " + time * 0.000000001);
+        for (int i = 0; i < mas.length; i++){
+            System.out.println(mas[i]);
+        }
+    }
+
+    public static void Generation(int n,Random rn) throws IOException {
+
+        FileWriter fr = new FileWriter("D:/D/lab.txt");
+        for (int i = 0; i < n; i++) {
+            fr.write(String.valueOf(rn.nextInt(100000)) + " ");
+        }
+        fr.flush();
+    }
+}
+
+
