@@ -1,0 +1,77 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.GregorianCalendar;
+
+
+public class Tour {
+   public GregorianCalendar date;
+    public String name;
+    public String country;
+    public int price;
+    public int amount;
+    public int year;
+    public int month;
+    public int dayOfMonth;
+
+    static String[] mas = new String[5];
+    static Tour[] tour = new Tour[5];
+
+
+    public Tour(String name, String country, GregorianCalendar date, int price, int amount) {
+        this.name = name;
+        this.country = country;
+        this.price = price;
+        this.amount = amount;
+        this.date=date;
+
+    }
+
+    public void GregorianCalendar(int year, int month, int dayOfMonth){
+        this.year=year;
+        this.month=month;
+        this.dayOfMonth=dayOfMonth;
+
+    }
+
+    public static void main(String[] args) throws IOException {
+        tour[0] = new Tour("hfgh", "erghrh", new GregorianCalendar(2016,8,27), 57, 4);
+        tour[1] = new Tour("ifbnh", "rtu", new GregorianCalendar(2016,7,6), 41, 2);
+        tour[2] = new Tour("vbv", "sedfh", new GregorianCalendar(2016,10,21),  24, 8);
+        tour[3] = new Tour("nmyu", "cvfty", new GregorianCalendar(2016,11,9), 67, 4);
+        tour[4] = new Tour("hjjl", "setgu", new GregorianCalendar(2016,9,13), 12, 6);
+
+        write();
+        read();
+
+            for (int i=0; i<5; i++){
+                System.out.println(mas[i].toString());
+            }
+    }
+
+    public static void write() throws IOException {
+        FileWriter r = new FileWriter("D:/D/5.txt");
+        for (int i=0; i<5; i++) {
+            r.write(String.valueOf(tour[i]));
+            r.append("\r\n");
+        }
+        r.flush();
+
+    }
+
+    public static void read() throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader("D:/D/5.txt"));
+        String line  = null;
+        int i=0;
+        while ((line = reader.readLine()) != null){
+            mas[i]=line;
+            i++;
+        }
+    }
+
+    public String toString(){
+        return this.name +" "+ this.country +" "+this.date.get(date.DAY_OF_MONTH)+"/"+this.date.get(date.MONTH)+"/"+this.date.get(date.YEAR) +" "+ this.price +" "+ this.amount;
+    }
+
+}
