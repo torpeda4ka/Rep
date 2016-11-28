@@ -9,6 +9,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         boolean sort = false;
         int n = 0;
+        int count = 0;
         Random rn = new Random();
         BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
         Scanner sc = new Scanner(new File("D:/D/lab.txt"));
@@ -23,56 +24,74 @@ public class Main {
             System.out.println("3. Сортировка вставками");
             System.out.println("4. Сортировка пузырьком");
             System.out.println("5. Проверить, отсортирован ли массив");
+            System.out.println("6. Быстрая сортировка частично упорядоченного массива");
+            System.out.println("7. Быстрая сортировка массива по убыванию");
+            System.out.println("8. Сортировка 100 000");
             int m = Integer.parseInt(r.readLine());
             if (m == 1) {
                 sc = new Scanner(new File("D:/D/lab.txt"));
                 System.out.println("Введите количество сортируемых елементов");
-                int count = Integer.parseInt(r.readLine());
+                count = Integer.parseInt(r.readLine());
                 mas = new int[n];
                 int i = 0;
                 while (sc.hasNext()) {
                     mas[i] = sc.nextInt();
                     i++;
                 }
+                long start = System.nanoTime();
                 Quick(mas, 0, count - 1, rn);
+                long finish = System.nanoTime();
+                long time = finish - start;
                 sort = true;
                 for (int c = 0; c < mas.length; c++) {
-                    System.out.println(mas[c]);
+                    System.out.println(mas[c] + " ");
                 }
+                System.out.println("Время на сортировку : " + time * 0.00000001);
             }
             if (m == 2) {
                 sc = new Scanner(new File("D:/D/lab.txt"));
                 System.out.println("Введите количество сортируемых елементов");
-                int count = Integer.parseInt(r.readLine());
+                count = Integer.parseInt(r.readLine());
                 int[] mas2 = new int[n];
                 int i = 0;
                 while (sc.hasNext()) {
                     mas2[i] = sc.nextInt();
                     i++;
+                }  long start = System.nanoTime();
+                Selection(count, mas2, 0);
+                long finish = System.nanoTime();
+                long time = finish - start;
+
+                for (int j = 0; j < mas2.length; j++){
+                    System.out.println(mas2[j]);
                 }
-                Selection(count, mas2);
+                System.out.println("Время на сортировку : " + time * 0.000000001);
                 sort = true;
             }
             if (m == 3) {
                 sc = new Scanner(new File("D:/D/lab.txt"));
                 System.out.println("Введите количество сортируемых елементов");
-                int count = Integer.parseInt(r.readLine());
+                count = Integer.parseInt(r.readLine());
                 mas = new int[n];
                 int i = 0;
                 while (sc.hasNext()) {
                     mas[i] = sc.nextInt();
                     i++;
                 }
-                Insert(mas,count);
+                long start = System.nanoTime();
+                Insert(mas, count,1);
+                long finish = System.nanoTime();
+                long time = finish - start;
                 sort = true;
                 for (int c = 0; c < mas.length; c++) {
                     System.out.println(mas[c]);
                 }
+                System.out.println("Время на сортировку : " + time * 0.000000001);
             }
             if (m == 4) {
                 sc = new Scanner(new File("D:/D/lab.txt"));
                 System.out.println("Введите количество сортируемых елементов");
-                int count = Integer.parseInt(r.readLine());
+                count = Integer.parseInt(r.readLine());
                 mas = new int[n];
                 int i = 0;
                 while (sc.hasNext()) {
@@ -83,20 +102,385 @@ public class Main {
                 sort = true;
             }
             if (m == 5) {
-                if (sort == false) {
+
+                if ((sort == true) && (count == n)) {
+                    System.out.println("Массив отсортирован");
+                } else {
                     System.out.println("Массив не отсортирован");
                 }
-                if (sort == true) {
-                    System.out.println("Массив отсортирован");
+
+            }
+            if (m == 6) {
+                sc = new Scanner(new File("D:/D/lab.txt"));
+                mas = new int[n];
+                System.out.println("Введите начальный элемент");
+                int k = Integer.parseInt(r.readLine());
+                System.out.println("Введите конечный элемент");
+                int j = Integer.parseInt(r.readLine());
+
+                int i = 0;
+                while (sc.hasNext()) {
+                    mas[i] = sc.nextInt();
+                    i++;
+                }
+
+                Quick(mas, k, j - 1, rn);
+
+                long start = System.nanoTime();
+                Quick(mas, 0, n - 1, rn);
+                long finish = System.nanoTime();
+                long time = finish - start;
+                for (int y = 0; y < mas.length; y++) {
+                    System.out.println(mas[y]);
+                }
+                System.out.println("Время на сортировку : " + time * 0.00000001);
+            }
+
+
+            if (m == 7) {
+                int c = n;
+                int[] quick = new int[n];
+                for (int i = 0; i < n; i++) {
+                    c--;
+                    quick[i] = c;
+                }
+
+                long start = System.nanoTime();
+                Quick(quick, 0, n - 1, rn);
+                long finish = System.nanoTime();
+                long time = finish - start;
+
+                for (int i = 0; i < n; i++) {
+                    System.out.println(quick[i]);
+                }
+                System.out.println("Время на сортировку : " + time * 0.00000001);
+            }
+
+            if (m == 8) {
+                System.out.println("1. Быстрая сортировка");
+                System.out.println("2. Сортировка выбором");
+                System.out.println("3. Сортировка вставками");
+                System.out.println("4. Сортировка пузырьком");
+
+                int b = Integer.parseInt(r.readLine());
+
+                if (b == 1) {
+                    int v = Integer.parseInt(r.readLine());
+                    if (v == 1) {
+                        mas = new int[n];
+                        int i = 0;
+                        while (sc.hasNext()) {
+                            mas[i] = sc.nextInt();
+                            i++;
+                        }
+                        long start = System.nanoTime();
+                        Quick(mas, 0, n - 1, rn);
+                        long finish = System.nanoTime();
+                        long time = finish - start;
+                      /*  for (int j=0; j<n; j++){
+                            System.out.println(mas[j]);
+                        }*/
+                        System.out.println("Время на сортировку : " + time * 0.00000001);
+                    }
+                    if (v == 2) {
+                        mas = new int[n];
+                        int i = 0;
+                        while (sc.hasNext()) {
+                            mas[i] = sc.nextInt();
+                            i++;
+                        }
+                        long start = System.nanoTime();
+                        for (int j = 0; j < 100000; ) {
+                            Quick(mas, j, j + (10000 - 1), rn);
+                            j = j + 10000;
+                        }
+                        long finish = System.nanoTime();
+                        long time = finish - start;
+                      /*  for (int j=0; j<n; j++){
+                            System.out.println(mas[j]);
+                        }*/
+                        System.out.println("Время на сортировку : " + time * 0.00000001);
+                    }
+                    if (v == 3) {
+                        mas = new int[n];
+                        int i = 0;
+                        while (sc.hasNext()) {
+                            mas[i] = sc.nextInt();
+                            i++;
+                        }
+                        long start = System.nanoTime();
+                        for (int j = 0; j < 100000; ) {
+                            Quick(mas, j, j + (1000 - 1), rn);
+                            j = j + 1000;
+                        }
+                        long finish = System.nanoTime();
+                        long time = finish - start;
+                          /*  for (int j=0; j<n; j++){
+                                System.out.println(mas[j]);
+                            }*/
+                        System.out.println("Время на сортировку : " + time * 0.00000001);
+                    }
+                    if (v == 4) {
+                        mas = new int[n];
+                        int i = 0;
+                        while (sc.hasNext()) {
+                            mas[i] = sc.nextInt();
+                            i++;
+                        }
+                        long start = System.nanoTime();
+                        for (int j = 0; j < 100000; ) {
+                            Quick(mas, j, j + (100 - 1), rn);
+                            j = j + 100;
+                        }
+                        long finish = System.nanoTime();
+                        long time = finish - start;
+                      /*  for (int j=0; j<n; j++){
+                            System.out.println(mas[j]);
+                        }*/
+                        System.out.println("Время на сортировку : " + time * 0.00000001);
+                    }
+                    if (v == 5) {
+                        mas = new int[n];
+                        int i = 0;
+                        while (sc.hasNext()) {
+                            mas[i] = sc.nextInt();
+                            i++;
+                        }
+                        long start = System.nanoTime();
+                        for (int j = 0; j < 100000; ) {
+                            Quick(mas, j, j + (10 - 1), rn);
+                            j = j + 10;
+                        }
+                        long finish = System.nanoTime();
+                        long time = finish - start;
+                  /*  for (int j=0; j<n; j++){
+                        System.out.println(mas[j]);
+                    }*/
+                        System.out.println("Время на сортировку : " + time * 0.00000001);
+                    }
+                }
+
+                if (b == 2) {
+                    int v = Integer.parseInt(r.readLine());
+
+                    if (v == 1) {
+                        int[] mas2 = new int[n];
+                        int i = 0;
+                        while (sc.hasNext()) {
+                            mas2[i] = sc.nextInt();
+                            i++;
+                        }
+                        long start = System.nanoTime();
+                        Selection(n, mas2, 0);
+                        long finish = System.nanoTime();
+                        long time = finish - start;
+                        for (int j = 0; j < mas2.length; j++){
+                            System.out.println(mas2[j]);
+                        }
+                        System.out.println("Время на сортировку : " + time * 
+
+0.000000001);
+                    }
+                    if (v == 2) {
+                        int[] mas2 = new int[n];
+                        int i = 0;
+                        while (sc.hasNext()) {
+                            mas2[i] = sc.nextInt();
+                            i++;
+                        }
+                        long start = System.nanoTime();
+                        for (int j = 0; j < 100000; ) {
+                            Selection(j + 10000, mas2, j);
+                            j = j + 10000;
+                        }
+                        long finish = System.nanoTime();
+                        long time = finish - start;
+                        for (int j = 0; j < mas2.length; j++){
+                            System.out.println(mas2[j]);
+                        }
+                        System.out.println("Время на сортировку : " + time * 
+
+0.000000001);
+                    }
+                    if (v == 3) {
+                        int[] mas2 = new int[n];
+                        int i = 0;
+                        while (sc.hasNext()) {
+                            mas2[i] = sc.nextInt();
+                            i++;
+                        }
+                        long start = System.nanoTime();
+                        for (int j = 0; j < 100000; ) {
+                            Selection(j + 1000, mas2, j);
+                            j = j + 1000;
+                        }
+                        long finish = System.nanoTime();
+                        long time = finish - start;
+                           for (int j = 0; j < mas2.length; j++){
+                             System.out.println(mas2[j]);
+                           }
+                        System.out.println("Время на сортировку : " + time * 
+
+0.000000001);
+                    }
+                    if (v == 4) {
+                        int[] mas2 = new int[n];
+                        int i = 0;
+                        while (sc.hasNext()) {
+                            mas2[i] = sc.nextInt();
+                            i++;
+                        }
+                        long start = System.nanoTime();
+                        for (int j = 0; j < 100000; ) {
+                            Selection(j + 100 , mas2, j);
+                            j = j + 100;
+                        }
+                        long finish = System.nanoTime();
+                        long time = finish - start;
+                        for (int j = 0; j < mas2.length; j++){
+                            System.out.println(mas2[j]);
+                        }
+                        System.out.println("Время на сортировку : " + time * 
+
+0.000000001);
+                    }
+                    if (v == 5) {
+                        int[] mas2 = new int[n];
+                        int i = 0;
+                        while (sc.hasNext()) {
+                            mas2[i] = sc.nextInt();
+                            i++;
+                        }
+                        long start = System.nanoTime();
+
+                        for (int j = 0; j < 100000; ) {
+                            Selection(j + 10 , mas2, j);
+                            j = j + 10;
+                        }
+                        long finish = System.nanoTime();
+                        long time = finish - start;
+
+                        for (int j = 0; j < mas2.length; j++){
+                            System.out.println(mas2[j]);
+                        }
+                        System.out.println("Время на сортировку : " + time * 
+
+0.000000001);
+                    }
+                }
+                if (b==3){
+                    int v = Integer.parseInt(r.readLine());
+
+                    if (v==1){
+                        mas = new int[n];
+                        int i = 0;
+                        while (sc.hasNext()) {
+                            mas[i] = sc.nextInt();
+                            i++;
+                        }
+                        long start = System.nanoTime();
+                        Insert(mas, n, 1);
+                        long finish = System.nanoTime();
+                        long time = finish - start;
+                        for (int c = 0; c < mas.length; c++) {
+                            System.out.println(mas[c]);
+                        }
+                        System.out.println("Время на сортировку : " + time * 
+
+0.000000001);
+                    }
+                    if (v==2){
+                        mas = new int[n];
+                        int i = 0;
+                        while (sc.hasNext()) {
+                            mas[i] = sc.nextInt();
+                            i++;
+                        }
+                        long start = System.nanoTime();
+                        for (int j=1; j<100000;) {
+                            Insert(mas, j+(10000-1), j);
+                            j=j+10000;
+                        }
+                        long finish = System.nanoTime();
+                        long time = finish - start;
+                        for (int c = 0; c < mas.length; c++) {
+                            System.out.println(mas[c]);
+                        }
+                        System.out.println("Время на сортировку : " + time * 
+
+0.000000001);
+                        }
+                        if (v==3){
+                            mas = new int[n];
+                            int i = 0;
+                            while (sc.hasNext()) {
+                                mas[i] = sc.nextInt();
+                                i++;
+                            }
+                            long start = System.nanoTime();
+                            for (int j=1; j<100000;) {
+                                Insert(mas, j+(1000-1), j);
+                                j=j+1000;
+                            }
+                            long finish = System.nanoTime();
+                            long time = finish - start;
+                            for (int c = 0; c < mas.length; c++) {
+                                System.out.println(mas[c]);
+                            }
+                            System.out.println("Время на сортировку : " + time * 
+
+0.000000001);
+                        }
+                        if (v==4){
+                            mas = new int[n];
+                            int i = 0;
+                            while (sc.hasNext()) {
+                                mas[i] = sc.nextInt();
+                                i++;
+                            }
+                            long start = System.nanoTime();
+                            for (int j=1; j<100000;) {
+                                Insert(mas, j+(100-1), j);
+                                j=j+100;
+                            }
+                            long finish = System.nanoTime();
+                            long time = finish - start;
+                            for (int c = 0; c < mas.length; c++) {
+                                System.out.println(mas[c]);
+                            }
+                            System.out.println("Время на сортировку : " + time * 
+
+0.000000001);
+                        }
+                        if (v==5){
+                            mas = new int[n];
+                            int i = 0;
+                            while (sc.hasNext()) {
+                                mas[i] = sc.nextInt();
+                                i++;
+                            }
+                            long start = System.nanoTime();
+                            for (int j=1; j<100000;) {
+                                Insert(mas, j+(10-1), j);
+                                j=j+10;
+                            }
+                            long finish = System.nanoTime();
+                            long time = finish - start;
+                          /*  for (int c = 0; c < mas.length; c++) {
+                                System.out.println(mas[c]);
+                            }*/
+                            System.out.println("Время на сортировку : " + time * 
+
+0.000000001);
+                        }
+                    }
                 }
             }
         }
-    }
 
 
-    public static void Insert(int mas[], int count) {
-        long start = System.nanoTime();
-        for(int i = 1; i < count; i++){
+    public static void Insert(int mas[], int count, int s) {
+        for(int i = s; i < count; i++){
             int curr = mas[i];
             int prev = i - 1;
             while(prev >= 0 && mas[prev] > curr){
@@ -105,14 +489,11 @@ public class Main {
             }
             mas[prev+1] = curr;
         }
-        long finish = System.nanoTime();
-        long time = finish - start;
-        System.out.println("Время на сортировку : " + time * 0.000000001);
     }
 
 
     public static void Quick(int[] mas,int l, int r,Random rn){
-        long start = System.nanoTime();
+
         int i=l;
         int j=r;
         int x = mas[l + rn.nextInt(r - l + 1) ];
@@ -137,14 +518,12 @@ public class Main {
         if (i<r){
             Quick(mas,i,r,rn);
         }
-        long finish = System.nanoTime();
-        long time = finish - start;
-        System.out.println("Время на сортировку : " + time * 0.000000001);
+
     }
 
-    public static void Selection(int count, int[] mas2) {
-        long start = System.nanoTime();
-        for (int i=0; i<count; i++){
+    public static void Selection(int count, int[] mas2, int s) {
+
+        for (int i=s; i<count; i++){
             int min = mas2[i];
             int  min_i = i;
             for (int j = i+1; j<count; j++){
@@ -159,12 +538,6 @@ public class Main {
                 mas2[min_i] = tmp;
             }
 
-        }
-        long finish = System.nanoTime();
-        long time = finish - start;
-        System.out.println("Время на сортировку : " + time * 0.000000001);
-        for (int i = 0; i < mas2.length; i++){
-            System.out.println(mas2[i]);
         }
     }
 
