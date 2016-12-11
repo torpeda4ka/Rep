@@ -1,0 +1,260 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+public class Main  extends JFrame {
+    static Main m = new Main();
+    static JLabel l1 = new JLabel("Hello");
+    boolean sw1,sw2,sw3;
+    public void addComponentsToPane(Container pane) {
+        pane.setLayout(null);
+
+        ButtonGroup group = new ButtonGroup();
+        JRadioButton j1 = new JRadioButton("Red", false);
+        JRadioButton j2 = new JRadioButton("Blue", false);
+        j1.setBounds(190,460,60,15);
+        j2.setBounds(260,460,60,15);
+        group.add(j1);
+        group.add(j2);
+        pane.add(j1);
+        pane.add(j2);
+
+        j1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                l1.setForeground(Color.RED);
+            }
+        });
+        j2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                l1.setForeground(Color.BLUE);
+            }
+        });
+
+        JButton b1 = new JButton("Доброе утро");
+        JButton b2 = new JButton("Добрый день");
+        JButton b3 = new JButton("Добрый вечер");
+        JButton b4 = new JButton("Доброй ночи");
+        JButton b5 = new JButton("Применить");
+
+        b5.setBounds(330,410,130,20);
+        JTextField f = new JTextField();
+        f.setBounds(170,410,150,20);
+        pane.add(f);
+        pane.add(b5);
+
+        pane.add(l1);
+        pane.add(b1);
+        pane.add(b2);
+        pane.add(b3);
+        pane.add(b4);
+        ImageIcon i1 = new ImageIcon("D:/JAVA/1.jpg");
+        ImageIcon i2 = new ImageIcon("D:/JAVA/2.jpg");
+        ImageIcon i3 = new ImageIcon("D:/JAVA/3.jpg");
+        ImageIcon i4 = new ImageIcon("D:/JAVA/4.jpg");
+        JLabel jl1 = new JLabel();
+        ImageIcon i = new ImageIcon("D:/D/1.jpg");
+        jl1.setIcon(i);
+        jl1.setBounds(150,110,300,200);
+        pane.add(jl1);
+
+      //  ActionListener al = new Main();
+        b1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                l1.setText(e.getActionCommand());
+                jl1.setIcon(i1);
+                jl1.setBounds(150,110,300,200);
+            }
+        });
+        b2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                l1.setText(e.getActionCommand());
+               jl1.setIcon(i2);
+            }
+        });
+        b3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                l1.setText(e.getActionCommand());
+              jl1.setIcon(i3);
+            }
+        });
+        b4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                l1.setText(e.getActionCommand());
+               jl1.setIcon(i4);
+            }
+        });
+        b5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                l1.setText(f.getText());
+            }
+        });
+
+        b1.setBounds(30,350,120,30);
+        b2.setBounds(160,350,120,30);
+        b3.setBounds(290,350,120,30);
+        b4.setBounds(420,350,120,30);
+
+
+        l1.setBounds(260,30,200,100);
+    }
+
+    private void createAndShowGUI() {
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        JFrame frame = new JFrame();
+        frame.getContentPane().setBackground(Color.WHITE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addComponentsToPane(frame.getContentPane());
+        frame.setSize(600,600);
+        frame.setVisible(true);
+
+
+        JCheckBox box1 = new JCheckBox("Green");
+        JCheckBox box2 = new JCheckBox("Yellow");
+        JCheckBox box3 = new JCheckBox("Gray");
+        box1.setBounds(160,510,65,15);
+        box2.setBounds(230,510,70,15);
+        box3.setBounds(300,510,70,15);
+        frame.add(box1);
+        frame.add(box2);
+        frame.add(box3);
+
+
+
+     box1.addItemListener(new ItemListener() {
+         @Override
+         public void itemStateChanged(ItemEvent e) {
+             if (!sw1) {
+                 sw1 = true;
+             }
+             else if (sw1) {
+                 sw1 = false;
+             }
+
+             if (sw1 && sw2==false && sw3==false){
+                 frame.getContentPane().setBackground(Color.GREEN);
+             }
+             if (sw1 && sw2==true && sw3==false){
+                 frame.getContentPane().setBackground(Color.cyan);
+             }
+             if (sw1 && sw2==false && sw3==true){
+                 frame.getContentPane().setBackground(Color.ORANGE);
+             }
+             if (sw1 && sw2==true && sw3==true){
+                 frame.getContentPane().setBackground(Color.PINK);
+             }
+
+             if (!sw1 && sw2==false && sw3==false){
+                 frame.getContentPane().setBackground(Color.WHITE);
+             }
+             if (!sw1 && sw2==true && sw3==false){
+                 frame.getContentPane().setBackground(Color.YELLOW);
+             }
+             if (!sw1 && sw2==false && sw3==true){
+                 frame.getContentPane().setBackground(Color.GRAY);
+             }
+             if (!sw1 && sw2==true && sw3==true){
+                 frame.getContentPane().setBackground(Color.MAGENTA);
+             }
+         }
+     });
+
+        box2.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (!sw2) {
+                    sw2 = true;
+                }
+                else if (sw2) {
+                    sw2 = false;
+                }
+
+                if (sw2 && sw1==false && sw3==false){
+                    frame.getContentPane().setBackground(Color.YELLOW);
+                }
+                if (sw2 && sw1==true && sw3==false){
+                    frame.getContentPane().setBackground(Color.cyan);
+                }
+                if (sw2 && sw1==false && sw3==true){
+                    frame.getContentPane().setBackground(Color.MAGENTA);
+                }
+                if (sw2 && sw1==true && sw3==true){
+                    frame.getContentPane().setBackground(Color.pink);
+                }
+
+                if (!sw2 && sw1==false && sw3==false){
+                    frame.getContentPane().setBackground(Color.WHITE);
+                }
+                if (!sw2 && sw1==true && sw3==false){
+                    frame.getContentPane().setBackground(Color.GREEN);
+                }
+                if (!sw2 && sw1==false && sw3==true){
+                    frame.getContentPane().setBackground(Color.YELLOW);
+                }
+                if (!sw2 && sw1==true && sw3==true){
+                    frame.getContentPane().setBackground(Color.ORANGE);
+                }
+            }
+        });
+
+        box3.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (!sw3) {
+                    sw3 = true;
+                }
+              else  if (sw3) {
+                    sw3 = false;
+                }
+
+                if (sw3 && sw1==false && sw2==false){
+                    frame.getContentPane().setBackground(Color.GRAY);
+                }
+                if (sw3 && sw1==true && sw2==false){
+                    frame.getContentPane().setBackground(Color.ORANGE);
+                }
+                if (sw3 && sw1==false && sw2==true){
+                    frame.getContentPane().setBackground(Color.MAGENTA);
+                }
+                if (sw3 && sw1==true && sw2==true){
+                    frame.getContentPane().setBackground(Color.pink);
+                }
+
+                if (!sw3 && sw1==false && sw2==false){
+                    frame.getContentPane().setBackground(Color.WHITE);
+                }
+                if (!sw3 && sw1==true && sw2==false){
+                    frame.getContentPane().setBackground(Color.GREEN);
+                }
+                if (!sw3 && sw1==false && sw2==true){
+                    frame.getContentPane().setBackground(Color.YELLOW);
+                }
+                if (!sw3 && sw1==true && sw2==true){
+                    frame.getContentPane().setBackground(Color.cyan);
+                }
+            }
+        });
+    }
+
+
+    public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                m.createAndShowGUI();
+
+            }
+        });
+
+    }
+
+
+}
