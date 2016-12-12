@@ -1,0 +1,121 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static int n;
+    public static ArrayList<Integer>[] matrix;
+    public static ArrayList<Integer>[] weight;
+    public static boolean[] passed;
+    public static int[] dis;
+    public static int[] shortWay;
+
+    static int vertex;
+    public static void main(String[] args) throws IOException {
+        Insert();
+        D(vertex);
+        write();
+    }
+
+    public static void Insert() throws IOException {
+
+        BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+         n = Integer.parseInt(r.readLine());
+
+        matrix = new ArrayList[n];
+        for (int i = 0; i < n; ++i) {
+            matrix[i] = new ArrayList<Integer>();
+        }
+
+        weight = new ArrayList[n];
+        for (int i = 0; i < n; ++i) {
+            weight[i] = new ArrayList<Integer>();
+        }
+
+        while(true){
+            StringTokenizer t = new StringTokenizer(r.readLine());
+          int v1 = Integer.parseInt(t.nextToken());
+            int v2 = Integer.parseInt(t.nextToken());
+            int w = Integer.parseInt(t.nextToken());
+            if (v1==0 && v2==0 && w==0){
+                break;
+            }
+
+            v1--;
+            v2--;
+            matrix[v1].add(v2);
+            weight[v1].add(w);
+        }
+        vertex = Integer.parseInt(r.readLine()) - 1;
+
+        passed = new boolean[n];
+        Arrays.fill(passed, false);
+
+        shortWay = new int[n];
+        Arrays.fill(shortWay, -1);
+
+        dis = new int[n];
+        Arrays.fill(dis, Integer.MAX_VALUE / 2);
+    }
+
+    public static void D(int vertex){
+        dis[vertex] = 0;
+        for (int j = 0; j < n; ++j) {
+            int v = -1;
+            int distV = Integer.MAX_VALUE / 2;
+
+            for (int i = 0; i < n; ++i) {
+                if (passed[i]) {
+                    continue;
+                }
+                if (distV < dis[i]) {
+                    continue;
+                }
+                v = i;
+                distV = dis[i];
+            }
+
+            for (int i = 0; i < matrix[v].size(); ++i) {
+                int u = matrix[v].get(i);
+                int weightU = weight[v].get(i);
+
+                if (dis[v] + weightU < dis[u]) {
+                    dis[u] = dis[v] + weightU;
+                    shortWay[u] = v;
+                }
+            }
+
+            passed[v] = true;
+        }
+    }
+   public static void  print(int v) {
+        if (v == -1) {
+            return;
+        }
+        print(shortWay[v]);
+        System.out.print(((v + 1) + " "));
+    }
+
+    public static void write(){
+        for (int v = 0; v < n; ++v) {
+            if (dis[v] != Integer.MAX_VALUE / 2 ) {
+                System.out.println(v+1 + " "+(dis[v] + " "));
+            } else {
+                System.out.println(("-1 "));
+            }
+        }
+        System.out.println();
+        for (int v = 0; v < n; ++v) {
+            System.out.print(((v + 1) + ": "));
+            if (dis[v] != Integer.MAX_VALUE / 2) {
+                print(v);
+            }
+            System.out.println();
+        }
+
+    }
+
+}
