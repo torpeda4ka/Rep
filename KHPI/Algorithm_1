@@ -1,0 +1,28 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Enter double number");
+		double number = Double.parseDouble(r.readLine());
+		long b = Double.doubleToLongBits(number);
+		if (number>-1) {
+		System.out.println("0"+Long.toBinaryString(b));
+		}
+		else {
+			System.out.println(Long.toBinaryString(b));
+		}
+		System.out.println("Enter int number");
+		int n = Integer.parseInt(r.readLine());
+		int a = Float.floatToIntBits(n);
+		if (number>-1) {
+		System.out.println("0"+Integer.toBinaryString(a));
+		}
+		else {
+			System.out.println(Integer.toBinaryString(a));
+		}
+	}
+}
