@@ -1,0 +1,41 @@
+OPTION DOTNAME ; включение и отключение функций ассемблера
+include temphls.inc   ; invoke и другие высокоуровневые инструкции
+include win64.inc      ; константы
+include kernel32.inc  ; прототипы функций из библиотеки kernel32.dll
+includelib kernel32.lib
+include user32.inc
+includelib user32.lib
+OPTION PROLOGUE:none  ;// пролог функций
+OPTION EPILOGUE:none    ;// эпилог функций
+.data
+_a1 dq 3
+_e1 dq 32
+_b1 dq 2
+_c1 dq 1
+const1 dq 8
+const2 dq 25
+_title db "Лабораторная работа №1. Выполнение арифметических операций",0
+strbuf dq ?,0
+_text db "Вывод результата e/8b + 25ac через MessageBox:",0ah,
+ "Результат: %d - целая часть",0ah,0ah,
+
+.code
+WinMain proc
+sub rsp,28h; выравнивание стека 28h=32d+8; 32d x 8 = 256; 8 - возврат
+mov rbp,rsp ; сохранение выравненного значения стека 
+ mov rax,_e1
+xor rdx,rdx
+div const1
+mul _b1
+
+ mov r8,rax
+
+ mov rax,const2
+ mul _a1
+ mul _c1
+ add rax,r8
+invoke wsprintf, ADDR strbuf, ADDR _text, rax
+invoke MessageBox, NULL, addr strbuf, addr _title, MB_ICONINFORMATION
+invoke ExitProcess,0
+WinMain endp
+end
