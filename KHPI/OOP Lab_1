@@ -1,0 +1,68 @@
+public class Main {
+    static int even;
+    static int odd;
+    public static void main(String[] args)  {
+       int number = 0x06F84C;
+       long mobile_number = 380995563005l;
+       int last_two_numbers = 0b111111;
+       int last_four_numbers = 012673;
+       int x = ((25-1)%26)+1;
+       char c = 'Y';
+        System.out.println(even(number)+" "+odd(number));
+        System.out.println(even(mobile_number)+" "+odd(mobile_number));
+        System.out.println(even(last_two_numbers)+" "+odd(last_two_numbers));
+        System.out.println(even(last_four_numbers)+" "+odd(last_four_numbers));
+        System.out.println(even(x)+" "+odd(x));
+        System.out.println(even(c)+" "+odd(c));
+        System.out.print(ones(Integer.toString(x,2))+" "+zeros(Integer.toString(x,2)));
+    }
+    public static int even(long n){
+        even=0;
+        long number = n;
+        long rest = 0;
+        while(number!=0){
+            rest = number % 10;
+            number = number / 10;
+            if (rest % 2 == 0){
+                even++;
+            }
+        }
+        return even;
+    }
+
+    public static int odd(long n){
+        odd=0;
+        long number = n;
+        long rest = 0;
+        while(number!=0){
+            rest = number % 10;
+            number = number / 10;
+            if (rest % 2 != 0){
+                odd++;
+            }
+        }
+        return odd;
+    }
+
+    public static int ones(String s){
+      char[] c = s.toCharArray();
+        int ones = 0;
+        for (int i=0; i<c.length; i++ ){
+            if (c[i]=='1'){
+                ones++;
+            }
+        }
+        return ones;
+    }
+
+    public static int zeros(String s){
+        char[] c = s.toCharArray();
+        int zero = 0;
+        for (int i=0; i<c.length; i++ ){
+            if (c[i]=='0'){
+                zero++;
+            }
+        }
+        return zero;
+    }
+}
