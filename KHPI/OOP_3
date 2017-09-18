@@ -1,0 +1,30 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Main {
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+		String s = r.readLine();
+		String[] mas = s.split("\\.");
+		Pattern vowels = Pattern.compile(("(?ui)[eyuioa]"));
+		Pattern consonants = Pattern.compile("(?ui)[qwrtpsdfghjklzxcvbnm]");
+		for (int i=0; i<mas.length; i++) {
+			int vowels_counter=0;
+			int consonants_counter=0;
+			Matcher v = vowels.matcher(mas[i]);
+			Matcher c = consonants.matcher(mas[i]);
+				while(v.find()) {
+					vowels_counter++;
+				}
+				while(c.find()) {
+					consonants_counter++;
+				}
+				System.out.println("Vowels: "+vowels_counter);
+				System.out.println("Consonants: "+consonants_counter);
+		}
+	}
+}
