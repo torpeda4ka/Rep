@@ -1,0 +1,56 @@
+OPTION DOTNAME ; включение и отключение функции ассемблера
+include temphls.inc
+include win64.inc
+include kernel32.inc
+includelib kernel32.lib
+include user32.inc
+includelib user32.lib
+OPTION PROLOGUE:none
+OPTION EPILOGUE:none
+count PROTO arg_a:QWORD,arg_b:QWORD,arg_c:QWORD,arg_d:QWORD,arg_e:QWORD,arg_f:QWORD,arg_g:QWORD
+.data
+_a1 dq 3
+_b1 dq 1
+_c1 dq 3
+_d1 dq 1
+_e1 dq 1
+_f1 dq 1
+_g1 dq 2
+_res1 dq 0
+_title db "ЛР2. Процедуры. masm64",0
+strbuf dq ?,0
+_text db "Уравнение  g/f + e/d — cb/a",0ah,"Результат: %d",0ah,"Адрес переменной в памяти: %p",0ah,0ah,
+"Автор: Рысованый А.Н.,  каф. ВТП, НТУ ХПИ",0
+.code
+count proc arg_a:QWORD, arg_b:QWORD, arg_c:QWORD,arg_d:QWORD,arg_e:QWORD,arg_f:QWORD,arg_g:QWORD
+mov rax,r8 ; rax = _c1
+mul rdx ; rax = c*b
+div rcx ; rax = (c*b)/a
+mov rsi,rax ; rsi = (c*b)/a
+mov rax,[rbp+20h] ; rax = _e1
+div r9 ; rax = e/d
+mov r10,rax ; r10 = e/d
+mov rax,[rbp+36h] ; rax = _g1
+xor rax,rax
+mov r11,[rbp+28h] ; r11 = _f1
+div r11 ; rax = g/f
+add rax,r10
+sub rax,rsi
+
+mov _res1,rax
+
+
+mov _res1,rsi
+;leave ; Восстановление кадра стека.
+ret
+count endp
+
+WinMain proc
+sub rsp,28h; выравнивание стека 28h=32d+8; 8 - возврат
+mov rbp,rsp
+invoke count,_a1,_b1,_c1,_d1,_e1,_f1,_g1
+invoke wsprintf, ADDR strbuf, ADDR _text, _res1, ADDR _res1
+invoke MessageBox, NULL, addr strbuf, addr _title, MB_ICONINFORMATION
+invoke ExitProcess,0
+WinMain endp
+end
