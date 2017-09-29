@@ -11,16 +11,16 @@ count PROTO arg_a:QWORD,arg_b:QWORD,arg_c:QWORD,arg_d:QWORD,arg_e:QWORD,arg_f:QW
 .data
 _a1 dq 3
 _b1 dq 1
-_c1 dq 3
+_c1 dq 6
 _d1 dq 1
-_e1 dq 1
-_f1 dq 1
-_g1 dq 2
+_e1 dq 4
+_f1 dq 5
+_g1 dq 20
 _res1 dq 0
 _title db "ЛР2. Процедуры. masm64",0
 strbuf dq ?,0
 _text db "Уравнение  g/f + e/d — cb/a",0ah,"Результат: %d",0ah,"Адрес переменной в памяти: %p",0ah,0ah,
-"Автор: Рысованый А.Н.,  каф. ВТП, НТУ ХПИ",0
+
 .code
 count proc arg_a:QWORD, arg_b:QWORD, arg_c:QWORD,arg_d:QWORD,arg_e:QWORD,arg_f:QWORD,arg_g:QWORD
 mov rax,r8 ; rax = _c1
@@ -30,17 +30,15 @@ mov rsi,rax ; rsi = (c*b)/a
 mov rax,[rbp+20h] ; rax = _e1
 div r9 ; rax = e/d
 mov r10,rax ; r10 = e/d
-mov rax,[rbp+36h] ; rax = _g1
-xor rax,rax
+mov rax,[rbp+30h] ; rax = _g1
 mov r11,[rbp+28h] ; r11 = _f1
+xor rdx,rdx
 div r11 ; rax = g/f
 add rax,r10
 sub rax,rsi
-
 mov _res1,rax
 
 
-mov _res1,rsi
 ;leave ; Восстановление кадра стека.
 ret
 count endp
