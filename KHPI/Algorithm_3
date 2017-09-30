@@ -3,9 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 class Main {
-
-
-
+    
     public static void main(String arg[]) throws IOException {
         BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
         String s = r.readLine();
@@ -23,26 +21,31 @@ class Main {
     }
 
     public static void reverse(char[] c, int i, int j){
+        long start = System.nanoTime();
         char tmp = c[i];
         c[i]=c[j];
         c[j]=tmp;
         i++;
         j--;
         if (i>=(c.length)/2){
+            long finish = System.nanoTime()-start;
+            System.out.println("Рекурсивный метод: "+(finish));
             return;
         }
         else {
             reverse(c,i,j);
         }
-
     }
 
     public static void iteration(char[] ch){
+        long start = System.nanoTime();
         for (int i=0, j=ch.length-1; i<ch.length/2; i++,j--){
             char tmp = ch[i];
             ch[i]=ch[j];
             ch[j]=tmp;
         }
+        long finish = System.nanoTime()-start;
+          System.out.println("Итерационный метод: "+(finish));
     }
 
 }
