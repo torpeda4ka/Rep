@@ -11,23 +11,45 @@ class Main {
         BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(r.readLine());
         int key = Integer.parseInt(r.readLine());
-      List<Integer> list = new LinkedList<>();
+        List<Integer> list = new LinkedList<>();
         Random random = new Random();
         for (int i=0; i<n; i++){
             list.add(random.nextInt(2*n));
             System.out.print(list.get(i)+" ");
         }
         System.out.println();
+        long start = System.nanoTime();
         LinearSearch((LinkedList<Integer>) list,n,key);
+        System.out.println("Time: " + (System.nanoTime() - start));
+        start = System.nanoTime();
+        barrierSearch((LinkedList<Integer>) list,n,key);
+        System.out.println("Time: " + (System.nanoTime() - start));
 
     }
     public static void LinearSearch(LinkedList<Integer> list, int n, int key){
         for (int i=0; i<n; i++) {
             if (key == list.get(i)) {
-                System.out.print("Found: " + list.get(i));
+                System.out.println("Found: " + list.get(i));
+                System.out.println("Comparisons: " + (i+1));
                 return;
             }
         }
             System.out.println("Not found");
+        System.out.println("Comparisons: " + n);
     }
+
+    public static void barrierSearch(LinkedList<Integer> list, int n, int key){
+
+            list.add(key);
+            int i=0;
+           while (list.get(i)!=key){
+               i++;
+           }
+           if (i<n) {
+               System.out.println("Found: " + list.get(i) + "\n" + "Comparisons: " + (i+1));
+           }
+           else {
+               System.out.println("Not found " + "\n"  + "Comparisons: " + i);
+           }
+        }
 }
