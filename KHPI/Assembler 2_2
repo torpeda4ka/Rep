@@ -1,0 +1,59 @@
+title передача массива; masm64
+OPTION DOTNAME ;
+include temphls.inc
+include win64.inc
+include kernel32.inc
+includelib kernel32.lib
+include user32.inc
+includelib user32.lib
+;include comdlg32.inc
+;includelib comdlg32.lib
+;include comctl32.inc
+includelib comctl32.lib
+;include gdi32.inc
+includelib gdi32.lib
+includelib msvcrt.lib
+OPTION PROLOGUE:none
+OPTION EPILOGUE:none
+.data
+
+
+titl db "Вывод через функцию MessageBox",0; название упрощенного окна
+buf1 dq 5 dup(0) ; буфер вывода сообщения
+ifmt1 db "Количество элементов %d","Количество элементов %d"
+
+
+mas1 dq 2,3,5,5,14;
+mas2 dq 2,3,4,5,13;
+amount dq 0
+len1 equ ($-mas1)/type mas1 ; определение количества байтов массива mas1
+
+
+
+.code
+WinMain proc
+sub rsp,28h; выравнивание стека 28h=32d+8; 8 - возврат
+mov rbp,rsp
+;xor r15,r15
+mov rcx,len1 ; 5
+lea rsi,byte ptr mas1 ; занесение адреса массива mas1 в rsi
+lea rdi,byte ptr mas2
+@1: movzx rax, word ptr [rsi] ; занесение элемента mas1 в rах
+;movzx r10,word ptr [rsi] ; дублирование для вывода
+    movzx rdx, word ptr [rdi] ; занесение элемента mas2 в rdx
+    cmp rdx,rax
+ja m3 ;
+jmp m2
+m3:
+inc amount
+inc r15
+m2 :
+inc rdi;
+inc rsi;
+dec rcx ; проверка счетчика количества байтов в массиве mas1
+jnz @1 ; если в есх не нуль, то цикл
+invoke wsprintf, ADDR buf1, ADDR ifmt1,amount,r15;
+invoke MessageBox,0,addr buf1,addr titl, MB_ICONINFORMATION;
+invoke ExitProcess, 0
+WinMain endp
+end
