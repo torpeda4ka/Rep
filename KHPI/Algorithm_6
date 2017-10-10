@@ -1,0 +1,58 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+
+class Main {
+
+    public static void main(String arg[]) throws IOException {
+        BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+        int mas[] = new int[21];
+        int point = 0;
+        int n=0;
+        while (n != 4) {
+            System.out.println("1. Add request");
+            System.out.println("2. Remove request");
+            System.out.println("3. Print");
+            System.out.println("4. Exit");
+            n = Integer.parseInt(r.readLine());
+            if (n == 1) {
+                System.out.println("Enter the element");
+                int el = Integer.parseInt(r.readLine());
+                if (point < 21) {
+                    mas[point++] = el;
+                } else {
+                    System.out.println("Your queue is full");
+                }
+            }
+            if (n == 2) {
+                if (point > 0) {
+                    int max = mas[0];
+                    int index = 0;
+                    for (int i = 0; i < point; i++) {
+                        if (max < mas[i]) {
+                            max = mas[i];
+                            index = i;
+                        }
+
+                    }
+                    point--;
+                    for (int i = index; i < point; i++) {
+                        mas[i] = mas[i + 1];
+                    }
+                }
+            }
+            if (n == 3) {
+                if (point>0){
+                for (int i = 0; i < point; i++) {
+                    System.out.println(mas[i]);
+                    }
+                }
+                else {
+                    System.out.println("Your queue is empty");
+                }
+            }
+        }
+    }
+}
+
